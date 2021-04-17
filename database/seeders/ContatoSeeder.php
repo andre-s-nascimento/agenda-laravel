@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Contato;
 use Illuminate\Database\Seeder;
 
 class ContatoSeeder extends Seeder
@@ -13,6 +14,7 @@ class ContatoSeeder extends Seeder
      */
     public function run()
     {
-        //
+        Contato::factory(20)->create();
+        //sail artisan db:seed --class=ContatoSeeder
     }
 }
