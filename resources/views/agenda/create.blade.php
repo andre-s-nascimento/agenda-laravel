@@ -1,3 +1,8 @@
+@extends('layouts.app')
+
+@section('title', 'Criar Novo Contato')
+
+@section('content')
 <h1>Criar Novo Contato</h1>
 
 <div>
@@ -7,3 +12,4 @@
     </form>
 
 </div>
+@endsection

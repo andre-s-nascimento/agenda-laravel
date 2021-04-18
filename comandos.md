@@ -15,3 +15,41 @@ return true; //lembrar de atualizar aqui o Validador Customizado o default é fa
 
 #link simbolico public para armazenamento
 sail artisan storage:link
+
+#FRONT END
+#Instalando tailwindcss jit
+
+npm install
+
+npm install -D tailwindcss
+
+npx tailwindcss init
+
+#Next, you should add each of Tailwind's "layers" to your application's resources/css/app.css file:
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+npm install -D @tailwindcss/jit tailwindcss postcss
+
+#Criando arquivo tailwind.config.js
+// tailwind.config.js
+module.exports = {
+  purge: [
+    './resources/**/*.blade.php',
+    './resources/**/*.js',
+    './resources/**/*.vue',
+  ],
+  darkMode: false, // or 'media' or 'class'
+  theme: {
+    extend: {},
+  },
+  variants: {
+    extend: {},
+  },
+  plugins: [],
+}npm
+
+#executar
+npx mix watch

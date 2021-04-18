@@ -1,3 +1,8 @@
+@extends('layouts.app')
+
+@section('title', 'Editar Contato')
+
+@section('content')
 <h1>Editar Contato: {{ $contato->nome }}</h1>
 
 <div>
@@ -6,3 +11,4 @@
         @include('agenda._partials.form')
     </form>
 </div>
+@endsection

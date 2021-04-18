@@ -1,3 +1,8 @@
+@extends('layouts.app')
+
+@section('title', 'Detalhe dos Contato')
+
+@section('content')
 <h1>Detalhes do Contato: {{ $contato->nome }} <a href="{{ route('agenda.index') }}">
         << </a>
 </h1>
@@ -17,3 +22,4 @@
     </ul>
 
 </div>
+@endsection
