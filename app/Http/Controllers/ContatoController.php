@@ -11,7 +11,7 @@ class ContatoController extends Controller
 {
     public function index()
     {
-        $contatos = Contato::latest()->paginate(5);
+        $contatos = Contato::latest()->paginate(4);
         // dd($contatos);
         return view('agenda.index', ['contatos' => $contatos]);
     }
