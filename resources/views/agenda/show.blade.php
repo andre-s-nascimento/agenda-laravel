@@ -5,7 +5,8 @@
 <div class="card-detail">
 
     <ul>
-        <li><img src="{{ $contato->foto }}" alt="{{ $contato->nome }}" class=""></li>
+        <li><img src="{{ url("storage/{$contato->foto}") }}" alt="{{ $contato->nome }}" width="200px" class="">
+        </li>
         <li>Nome: {{ $contato->nome }} </li>
         <li>Endereço: {{ $contato->endereço }} </li>
         <li>Código do País: +{{ $contato->codigo_pais }}</li>

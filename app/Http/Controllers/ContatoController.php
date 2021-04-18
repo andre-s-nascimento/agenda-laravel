@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Contato;
 use App\Http\Requests\StoreUpdateContato;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class ContatoController extends Controller
@@ -42,12 +43,59 @@ class ContatoController extends Controller
             $data['foto'] = $image;
         }
 
-
-
         Contato::create($data);
 
         return redirect()
             ->route('agenda.index')
             ->with('message', 'Contato Criado Com Sucesso');
+    }
+
+    public function edit($id)
+    {
+        $contato = Contato::find($id);
+        return view('agenda.edit', ['contato' => $contato]);
+    }
+
+    public function update(StoreUpdateContato $request, $id)
+    {
+        if (!$contato = Contato::find($id)) {
+            return redirect()->back();
+        }
+
+        $data = $request->all();
+
+        if ($request->foto && $request->foto->isValid()) {
+            if (Storage::exists($contato->foto)) {
+                Storage::delete(($contato->foto));
+            }
+
+            $nameFile = Str::of($request->title)->slug('-') . "." . $request->foto->getClientOriginalExtension();
+
+            $image = $request->foto->storeAs('contatos', $nameFile);
+            $data['foto'] = $image;
+        }
+
+        $contato->update($data);
+
+        return redirect()
+            ->route('agenda.index')
+            ->with('message', 'Contato atualizado com sucesso');
+    }
+
+    public function destroy($id)
+    {
+        //dd("Deletando o contato {$id}");
+        if (!$contato = Contato::find($id)) {
+            return redirect()->route('agenda.index');
+        }
+
+        if (Storage::exists($contato->image)) {
+            Storage::delete(($contato->image));
+        }
+
+        $contato->delete();
+
+        return redirect()->route('agenda.index')
+            ->with('message', 'Contato Deletado com sucesso');
     }
 }
