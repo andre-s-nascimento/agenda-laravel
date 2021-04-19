@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Contato;
 use App\Http\Requests\StoreUpdateContato;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -97,5 +98,23 @@ class ContatoController extends Controller
 
         return redirect()->route('agenda.index')
             ->with('message', 'Contato Deletado com sucesso');
+    }
+
+    public function search(Request $request)
+    {
+        $filters = $request->except(['_token']);
+
+        $posts = Contato::where('nome', 'LIKE', "%{$request->search}%")
+            ->orWhere('telefone', 'LIKE', "%{$request->search}%")
+            ->orWhere('email', 'LIKE', "%{$request->search}%")
+            ->paginate(4);
+
+        return view('agenda.index', [
+            'contatos' => $posts,
+            'filters' => $filters,
+        ]);
+        //     ->toSql();
+        // dd($posts);
+        // dd("pesquisando por {$request->search}");
     }
 }

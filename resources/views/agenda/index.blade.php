@@ -3,22 +3,34 @@
 @section('title', 'Listagem dos Contatos')
 
 @section('content')
-    <div class="bg-gray-100">
+    <div class="bg-gray-300 px-2 py-4">
         <h1 class="text-4xl">Listagem de Contatos</h1>
 
         <div class="navbar my-4">
             <a href="{{ route('agenda.create') }}" class="text-2xl">Criar novo contato</a>
         </div>
+
+        <!-- component -->
+        <form action="{{ route('agenda.search') }}" method="post">
+            @csrf
+            <div class="relative mr-6 my-2">
+                <input name="search" type="search" class="bg-purple-white shadow rounded border-0 p-1"
+                    placeholder="Pesquisar..." value="{{ old('search') ?? '' }}">
+
+            </div>
+        </form>
+
         @if (session('message'))
             <div>
                 {{ session('message') }}
             </div>
         @endif
 
-        @if ($contatos)
-            <div class="flex flex-wrap space-x-4 items-center justify-center sm:flex-shrink-0">
+        <div class="flex flex-wrap space-x-4 items-center justify-center sm:flex-shrink-0">
+
+            @if ($contatos)
                 @foreach ($contatos as $contato)
-                    <div class="relative bg-blue-100 py-6 px-4 rounded-3xl w-64 my-4 shadow-xl">
+                    <div class="relative bg-blue-100 py-6 px-4 rounded-3xl w-72 my-4 shadow-xl">
                         <div
                             class=" text-white flex items-center absolute rounded-full py-2 px-2 shadow-xl bg-blue-500 left-4 -top-6">
                             <!-- foto  -->
@@ -27,7 +39,7 @@
                         </div>
                         <div class="mt-8">
                             <div class="h-20">
-                                <p class="text-xl font-semibold my-2">{{ $contato->nome }}</p>
+                                <p class="text-xl font-semibold my-2">{{ $contato->nome }} {{ $contato->id }}</p>
                             </div>
                             <div class="flex space-x-2 text-black text-sm">
                                 <!-- svg  -->
@@ -55,10 +67,9 @@
 
                             <div class="flex place-content-center space-x-4  ">
                                 <div class="my-2 w-1/3 place-content-center">
-                                    <p class="font-semibold text-base text-center mb-2"><a
-                                            href="{{ route('agenda.show', $contato->id) }}" class="">Detalhes</a></p>
-                                    <div
-                                        class="flex text-base text-gray-400 font-semibold place-content-center">
+                                    <a href="{{ route('agenda.show', $contato->id) }}"> <button type="submit"
+                                            class="font-semibold text-base text-center bg-blue-300 w-20 px-1 py-1 rounded-lg mb-2 place-content-center">Detalhes</button></a>
+                                    <div class="flex text-base text-gray-400 font-semibold place-content-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 445 445">
                                             <path
                                                 d="M432.5 105.5h-24.2v-1.3c0-5.2-3.3-9.9-8.2-11.7 -30-11-60.6-16.5-90.9-16.5 -28.9 0-58.1 5-86.7 15 -28.6-9.9-57.7-15-86.7-15 -30.4 0-61 5.6-90.9 16.5 -4.9 1.8-8.2 6.5-8.2 11.7v1.3H12.5c-6.9 0-12.5 5.6-12.5 12.5v238.7c0 6.9 5.6 12.5 12.5 12.5h420c6.9 0 12.5-5.6 12.5-12.5V118C445 111.1 439.4 105.5 432.5 105.5zM383.3 113v188.1c-24.6-7.3-49.4-11-74.2-11s-49.6 3.7-74.1 11V113c24.6-8.1 49.5-12.1 74.2-12.1C333.8 100.9 358.7 105 383.3 113zM61.7 113c24.6-8.1 49.5-12.1 74.2-12.1 24.7 0 49.6 4.1 74.2 12.1v188.1c-24.6-7.3-49.4-11-74.2-11 -24.7 0-49.6 3.7-74.1 11V113L61.7 113zM25 130.5h11.7v187.9c0 4.1 2 7.9 5.3 10.2 2.1 1.5 4.6 2.3 7.2 2.3 1.4 0 2.9-0.2 4.3-0.8 27.2-9.9 54.9-15 82.4-15 24.7 0 49.6 4.1 74.2 12.2v16.8h-185L25 130.5 25 130.5zM420 344.1H235v-16.8c24.6-8.1 49.5-12.2 74.1-12.2 27.4 0 55.1 5 82.4 15 3.8 1.4 8.1 0.8 11.5-1.5 3.3-2.3 5.3-6.2 5.3-10.2V130.5H420V344.1z" />
@@ -75,9 +86,12 @@
                                 </div>
 
                                 <div class="my-2 w-1/3 place-content-center">
-                                    <p class="font-semibold text-base text-center mb-2">Editar</p>
-                                    <div
-                                        class="flex text-base text-gray-400 font-semibold place-content-center">
+                                    <a href="{{ route('agenda.edit', $contato->id) }}">
+                                        <button type="submit"
+                                            class="font-semibold text-base text-center bg-blue-300 w-20 px-1 py-1 rounded-lg mb-2 place-content-center">Editar</button>
+                                    </a>
+
+                                    <div class="flex text-base text-gray-400 font-semibold place-content-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 399.7 399.7">
                                             <path
                                                 d="M393.7 131.3l-29.5-29.5c0 0 0 0 0 0s0 0 0 0l-29.5-29.5c-2.3-2.3-5.5-3.7-8.8-3.7s-6.5 1.3-8.8 3.7l-14.6 14.6V12.5c0-6.9-5.6-12.5-12.5-12.5H14.8c-6.9 0-12.5 5.6-12.5 12.5v374.7c0 6.9 5.6 12.5 12.5 12.5h275c6.9 0 12.5-5.6 12.5-12.5V240.3l91.3-91.3C398.6 144.1 398.6 136.2 393.7 131.3zM277.4 374.7H27.3V25h250v86.8L174.1 215.1c-1.7 1.7-2.9 3.9-3.4 6.3l-15.4 74.4c-0.9 4.1 0.4 8.4 3.4 11.4 2.4 2.4 5.6 3.7 8.8 3.7 0.8 0 1.7-0.1 2.5-0.3l74.4-15.4c2.4-0.5 4.6-1.7 6.3-3.4l26.6-26.6V374.7zM190.5 249.2l26.3 26.3 -33.1 6.8L190.5 249.2zM242 265.3l-41.4-41.4L325.8 98.8l11.8 11.8 -76.4 76.4c-4.9 4.9-4.9 12.8 0 17.7 2.4 2.4 5.6 3.7 8.8 3.7s6.4-1.2 8.8-3.7l76.4-76.4 11.8 11.8L242 265.3z" />
@@ -86,9 +100,13 @@
                                 </div>
 
                                 <div class="my-2  w-1/3 place-content-center">
-                                    <p class="font-semibold text-base text-center mb-2">Excluir</p>
-                                    <div
-                                        class="flex text-base text-gray-400 font-semibold place-content-center">
+                                    <form action="{{ route('agenda.destroy', $contato->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')<button type="submit"
+                                            class="font-semibold text-base text-center bg-red-500 w-20 px-1 py-1 rounded-lg mb-2 place-content-center"
+                                            onclick="return confirm('Tem certeza que deseja apagar?')">Excluir</button>
+                                    </form>
+                                    <div class="flex text-base text-gray-400 font-semibold place-content-center">
                                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox=" 0 0 305 305">
                                             <path
                                                 d="M152.5 0C68.4 0 0 68.4 0 152.5s68.4 152.5 152.5 152.5c84.1 0 152.5-68.4 152.5-152.5S236.6 0 152.5 0zM152.5 280C82.2 280 25 222.8 25 152.5c0-70.3 57.2-127.5 127.5-127.5 70.3 0 127.5 57.2 127.5 127.5C280 222.8 222.8 280 152.5 280z" />
@@ -103,11 +121,11 @@
                         </div>
                     </div>
                 @endforeach
-            </div>
-        @else
-            <div>
-                <p>Não há contatos</p>
-            </div>
+        </div>
+    @else
+        <div>
+            <p>Não há contatos</p>
+        </div>
         @endif
 
         <div class="pagination flex place-content-center">

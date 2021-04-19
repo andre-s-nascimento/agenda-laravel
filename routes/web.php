@@ -15,13 +15,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/agenda', [ContatoController::class, 'index'])->name('agenda.index'); //listar
+Route::any('/agenda/search', [ContatoController::class, 'search'])->name('agenda.search'); //pesquisar
 
 Route::get('/agenda/criar', [ContatoController::class, 'create'])->name('agenda.create'); //criar novo contato
-Route::get('/agenda/{id}', [ContatoController::class, 'show'])->name('agenda.show'); //exibir detalhes 
+Route::get('/agenda/{id}', [ContatoController::class, 'show'])->name('agenda.show'); //exibir detalhes
 
 Route::get('/agenda/editar/{id}', [ContatoController::class, 'edit'])->name('agenda.edit'); //exibir form de edição
 Route::put('/agenda/{id}', [ContatoController::class, 'update'])->name('agenda.update'); //efetuar a atualização
-Route::delete('/agenda/{id}', [ContatoController::class, 'destroy'])->name('agenda.destroy'); // excluir um contato 
+Route::delete('/agenda/{id}', [ContatoController::class, 'destroy'])->name('agenda.destroy'); // excluir um contato
 Route::post('/agenda', [ContatoController::class, 'store'])->name('agenda.store');
 
 

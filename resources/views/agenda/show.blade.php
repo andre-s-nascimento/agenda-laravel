@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Detalhe dos Contato')
+@section('title', 'Detalhes do Contato')
 
 @section('content')
     <h1>Detalhes do Contato: {{ $contato->nome }} <a href="{{ url()->previous() }}">
