@@ -21,7 +21,7 @@ sail artisan storage:link
 
 npm install
 
-npm install -D tailwindcss
+npm install -D tailwindcss A
 
 npx tailwindcss init
 
@@ -36,19 +36,19 @@ npm install -D @tailwindcss/jit tailwindcss postcss
 #Criando arquivo tailwind.config.js
 // tailwind.config.js
 module.exports = {
-  purge: [
-    './resources/**/*.blade.php',
-    './resources/**/*.js',
-    './resources/**/*.vue',
-  ],
-  darkMode: false, // or 'media' or 'class'
-  theme: {
-    extend: {},
-  },
-  variants: {
-    extend: {},
-  },
-  plugins: [],
+purge: [
+'./resources/**/*.blade.php',
+'./resources/**/*.js',
+'./resources/**/*.vue',
+],
+darkMode: false, // or 'media' or 'class'
+theme: {
+extend: {},
+},
+variants: {
+extend: {},
+},
+plugins: [],
 }npm
 
 #executar
