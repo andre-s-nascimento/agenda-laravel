@@ -3,30 +3,132 @@
 @section('title', 'Listagem dos Contatos')
 
 @section('content')
-    <div class="bg-gray-300 px-2 py-4">
-        <h1 class="text-4xl">Listagem de Contatos</h1>
+    <div class="bg-light mr-1">
 
-        <div class="navbar my-4">
-            <a href="{{ route('agenda.create') }}" class="text-2xl">Criar novo contato</a>
-        </div>
+        {{-- <h1 class="">Listagem de Contatos</h1> --}}
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Contatos</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="{{ route('agenda.index') }}">Inicio</a> <span
+                            class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('agenda.create') }}">Criar</a>
+                    </li>
+
+                </ul>
+                <form class="form-inline my-2 my-lg-0" action="{{ route('agenda.search') }}" method="post">
+                    @csrf
+                    <input class="form-control mr-sm-2" type="search" name="search" placeholder="Pesquisar"
+                        aria-label="Pesquisar" value="{{ old('search') ?? '' }}">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Pesquisar</button>
+                </form>
+            </div>
+        </nav>
+
+        {{-- <div class="navbar my-4">
+            <a href="{{ route('agenda.create') }}" class="">Criar novo contato</a>
+        </div> --}}
 
         <!-- component -->
-        <form action="{{ route('agenda.search') }}" method="post">
-            @csrf
-            <div class="relative mr-6 my-2">
-                <input name="search" type="search" class="bg-purple-white shadow rounded border-0 p-1"
-                    placeholder="Pesquisar..." value="{{ old('search') ?? '' }}">
+        {{-- <div class="form-group">
 
-            </div>
-        </form>
+            <form action="{{ route('agenda.search') }}" method="post">
+                @csrf
 
+                <input name="search" type="search" class="form-group" placeholder="Pesquisar..."
+                    value="{{ old('search') ?? '' }}">
+
+
+            </form>
+        </div> --}}
         @if (session('message'))
             <div>
                 {{ session('message') }}
             </div>
         @endif
+        <hr>
+        @if ($contatos)
+            <div class="friend-list">
+                <div class="row">
+                    @foreach ($contatos as $contato)
 
-        <div class="flex flex-wrap space-x-4 items-center justify-center sm:flex-shrink-0">
+
+                        <div class="col-md-3 col-sm-6">
+                            <div class="friend-card">
+                                <img src="https://via.placeholder.com/400x100/6495ED" alt="profile-cover"
+                                    class="img-responsive cover">
+                                <div class="card-info">
+                                    <img class="profile-photo-lg" src="{{ url("storage/{$contato->foto}") }}"
+                                        alt="{{ $contato->nome }}">
+                                    <div class="friend-info">
+                                        <div
+                                            class="buttons p-1 text-center d-flex align-items-center justify-content-center">
+                                            <form action="{{ route('agenda.destroy', $contato->id) }}" method="POST">
+                                                <a href="{{ route('agenda.show', $contato->id) }}"
+                                                    class="btn btn-sm btn-outline-success" role="button">Detalhes</a>
+                                                <a href="{{ route('agenda.edit', $contato->id) }}"
+                                                    class="btn btn-sm btn-outline-info" role="button">Editar</a>
+                                                @csrf
+                                                @method('DELETE')<button type="submit" class="btn btn-sm btn-outline-danger"
+                                                    onclick="return confirm('Tem certeza que deseja apagar?')">Excluir</button>
+                                            </form>
+                                        </div>
+
+                                        <h5 class="bg-secondary text-white text-center d-flex align-items-center justify-content-center"
+                                            style="height: 3.5rem;">
+                                            {{ $contato->nome }}
+                                            {{ $contato->id }}</h5>
+                                        <p class="small"><i class="fa fa-phone-square-alt" style="margin-right: 20px;"></i>
+                                            +{{ $contato->codigo_pais }} ({{ $contato->codigo_cidade }})
+                                            {{ $contato->telefone }}</p>
+                                        <p class="card-text small">
+                                            <span class="fas fa-envelope-square" style="margin-right: 20px;"></span>
+                                            <a href="mailto:{{ $contato->email }}">{{ $contato->email }}</a>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+
+                </div>
+            </div>
+    </div>
+    {{-- <div class="card-deck">
+                @foreach ($contatos as $contato)
+                    <div class="card d-flex justify-content-center align-items-center">
+                        <img class="card-img-top rounded-circle w-50" src="{{ url("storage/{$contato->foto}") }}"
+                            alt="{{ $contato->nome }}">
+                        <div class="card-header d-flex align-items-center" style="height: 5rem;">
+                            <h5 class="">{{ $contato->nome }} {{ $contato->id }}</h5>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-text">
+                                <i class="fa fa-phone-square-alt" style="margin-right: 20px;"></i>
+                                +{{ $contato->codigo_pais }} ({{ $contato->codigo_cidade }})
+                                {{ $contato->telefone }}
+                            </p>
+                            <p class="card-text">
+                                <i class="fas fa-envelope-square" style="margin-right: 20px;"></i>
+                                <a href="mailto:{{ $contato->email }}">{{ $contato->email }}</a>
+                            </p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">Atualizados 3 minutos atrás</small>
+                        </div>
+                    </div>
+                @endforeach
+            </div> --}}
+
+    {{-- <div class="flex flex-wrap space-x-4 items-center justify-center sm:flex-shrink-0">
 
             @if ($contatos)
                 @foreach ($contatos as $contato)
@@ -121,19 +223,18 @@
                         </div>
                     </div>
                 @endforeach
-        </div>
-    @else
-        <div>
-            <p>Não há contatos</p>
-        </div>
-        @endif
+        </div> --}}
+@else
+    <div>
+        <p>Não há contatos</p>
+    </div>
+    @endif
 
-        <div class="pagination flex place-content-center">
-            @if (isset($filters))
-                {{ $contatos->appends($filters)->links() }}
-            @else
-                {{ $contatos->links() }}
-            @endif
-        </div>
+    <div class="pagination justify-content-center">
+        @if (isset($filters))
+            {{ $contatos->appends($filters)->links() }}
+        @else
+            {{ $contatos->links() }}
+        @endif
     </div>
 @endsection
