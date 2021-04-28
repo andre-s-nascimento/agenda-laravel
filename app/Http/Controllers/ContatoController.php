@@ -34,9 +34,10 @@ class ContatoController extends Controller
 
         $data = $request->all();
 
-        // dd($data);
+
 
         if ($request->foto->isValid()) {
+
 
             $nameFile = Str::of($request->nome)->slug('-') . "." . $request->foto->getClientOriginalExtension();
 
@@ -63,17 +64,19 @@ class ContatoController extends Controller
             return redirect()->back();
         }
 
+
         $data = $request->all();
 
         if ($request->foto && $request->foto->isValid()) {
-            if (Storage::exists($contato->foto)) {
+            if (Storage::exists($contato->foto) && $contato->foto !='contatos/avatar.svg') {
                 Storage::delete(($contato->foto));
             }
 
-            $nameFile = Str::of($request->title)->slug('-') . "." . $request->foto->getClientOriginalExtension();
+            $nameFile = Str::of($request->nome)->slug('-') . "." . $request->foto->getClientOriginalExtension();
 
             $image = $request->foto->storeAs('contatos', $nameFile);
             $data['foto'] = $image;
+
         }
 
         $contato->update($data);
