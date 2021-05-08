@@ -6,32 +6,7 @@
     <div class="bg-light mr-1">
 
         {{-- <h1 class="">Listagem de Contatos</h1> --}}
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">Contatos</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
 
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="{{ route('agenda.index') }}">Inicio</a> <span
-                            class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('agenda.create') }}">Criar</a>
-                    </li>
-
-                </ul>
-                <form class="form-inline my-2 my-lg-0" action="{{ route('agenda.search') }}" method="post">
-                    @csrf
-                    <input class="form-control mr-sm-2" type="search" name="search" placeholder="Pesquisar"
-                        aria-label="Pesquisar" value="{{ old('search') ?? '' }}">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Pesquisar</button>
-                </form>
-            </div>
-        </nav>
 
         {{-- <div class="navbar my-4">
             <a href="{{ route('agenda.create') }}" class="">Criar novo contato</a>
@@ -61,11 +36,14 @@
                     @foreach ($contatos as $contato)
 
 
-                        <div class="col-md-3 col-sm-6">
-                            <div class="friend-card">
-                                <img src="https://via.placeholder.com/400x100/6495ED" alt="profile-cover"
-                                    class="img-responsive cover">
-                                <div class="card-info">
+                        <div class="col-lg-3 col-md-6 col-sm-6">
+                            <div class="friend-card ">
+                                <div class="card-header bg-primary h-100">
+                                    <p class="invisible">.</p>
+                                </div>
+                                {{-- <img src="https://via.placeholder.com/400x100/6495ED" alt="profile-cover"
+                                    class="img-responsive cover "> --}}
+                                <div class="card-info b">
                                     <img class="profile-photo-lg" src="{{ url("storage/{$contato->foto}") }}"
                                         alt="{{ $contato->nome }}">
                                     <div class="friend-info">
@@ -86,11 +64,11 @@
                                             style="height: 3.5rem;">
                                             {{ $contato->nome }}
                                             {{ $contato->id }}</h5>
-                                        <p class="small"><i class="fa fa-phone-square-alt" style="margin-right: 20px;"></i>
+                                        <p class="small"><i class="fa fa-phone-square-alt"></i>
                                             +{{ $contato->codigo_pais }} ({{ $contato->codigo_cidade }})
                                             {{ $contato->telefone }}</p>
                                         <p class="card-text small">
-                                            <span class="fas fa-envelope-square" style="margin-right: 20px;"></span>
+                                            <span class="fas fa-envelope-square"></span>
                                             <a href="mailto:{{ $contato->email }}">{{ $contato->email }}</a>
                                         </p>
                                     </div>

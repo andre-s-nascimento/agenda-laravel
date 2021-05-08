@@ -3,13 +3,16 @@
 @section('title', 'Criar Novo Contato')
 
 @section('content')
-<h1>Criar Novo Contato</h1>
+    <h1>Criar Novo Contato</h1>
 
-<div>
+    <div class="container">
+        <form action="{{ route('agenda.store') }}" method="post" enctype="multipart/form-data">
 
-    <form action="{{ route('agenda.store') }}" method="post" enctype="multipart/form-data">
-        @include('agenda._partials.form')
-    </form>
 
-</div>
+            @include('agenda._partials.form')
+
+
+        </form>
+    </div>
+
 @endsection
